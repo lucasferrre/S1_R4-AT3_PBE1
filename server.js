@@ -6,43 +6,31 @@ const PORT = 8081;
 app.use(express.json());
 
 // função para validar as informações de nome e notas no array
-async function validaDados(pNome, pNotas) {
-    if (typeof pNome !== "string") {
-        throw new Error("O nome é inválido ou está vazio.por favor tente novamente!");   
-    }
+async function validaNumeros(pNumeros) {
+
     // aqui eu valido se não é um array e se a estring está vazia
-    if (!Array.isArray(pNotas) || pNotas.length === 0) {
+    if (!Array.isArray(pNumeros) || pNumeros.length === 0) {
         throw new Error("O array de notas é inválido ou está vazio. Por favor, tente novamente");
     }
     let soma = 0;
 
-    for (let i = 0; i < pNotas.length; i++) {
-        const nota = pNotas[i];
+    for (let i = 0; i < pNumeros.length; i++) {
+        const nota = pNumeros[i];
         soma += nota; // somando os valores dentro do array
       }
 
-      // calculando a média em relação ao tamanho da array
-    const media = soma / pNotas.length;
-
-    let status;
-    if (media >= 6) {
-        status = "Aprovado";
-    } else {
-        status = "Reprovado";
-    }
-
-    return { media, status };
+    return {soma};
 
 }
 
 // Crie uma projeto com que tenha uma rota POST /mensagem que atenda as seguintes necessidades:
-app.post('/alunos',async (req, res) => {
+app.post('/soma',async (req, res) => {
     try {
         //desestruturação
-        const { nome, notas } = req.body;// no post a gente requere ele com body que é o corpo da rquisição
-        console.log(`Dados recebidos: Nome=${nome}, Notas=[${notas}]`);
+        const { numeros } = req.body;// no post a gente requere ele com body que é o corpo da rquisição
+        console.log(`Dados recebidos: Nome=${nome}, Notas=[${notas}`);
 
-        const { media, status } = await validaDados(nome, notas);
+        const { soma } = await validaNumeros(numeros);
         // coloco o status 201 pois quando faço um post eu 
         // estou criando uma novo registro/requisição, sempre que usarmos post usamos o 201
         res.status(201).json (
