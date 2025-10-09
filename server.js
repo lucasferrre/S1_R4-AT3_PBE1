@@ -58,6 +58,7 @@ app.post('/alunos',async (req, res) => {
 
 });
 
+
 // rota para erro 404 quando a página não for encontrada em relação a URL
 app.use((req, res) => {
     res.status(404).send('Página não encontrada!');
