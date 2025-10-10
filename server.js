@@ -9,15 +9,24 @@ app.use(express.json());
 async function validaNumeros(pNumeros) {
 
     // aqui eu valido se não é um array e se a estring está vazia
-    if (!Array.isArray(pNumeros) || pNumeros.length === 0) {
+    if (!Array.isArray(pNumeros) || pNumeros.length === 0 ) {
         throw new Error("O array de notas é inválido ou está vazio. Por favor, tente novamente");
     }
-    let soma = 0;
 
-    for (let i = 0; i < pNumeros.length; i++) {
-        const numero = pNumeros[i];
-        soma += numero; // somando os valores dentro do array
-      }
+     // Aqui verifica se todos os itens são números válidos
+    /*  O some é uma função que testa se pelo menos um item do array atende a uma condição.
+        Se um ou mais elementos passarem no teste, ele retorna true.
+        Se nenhum passar, ele retorna false. */
+    const numInvalido = pNumeros.some(num => typeof num !== 'number' || isNaN(num));
+
+    // Aqui ele entra no if se algum valor do array não for um número
+    if (numInvalido) {
+        throw new Error("O array contém valores inválidos (como strings ou NaN). Use apenas números.");
+    }
+    
+    // nesse caso se for false o retorno de num
+    // aqui eu faço o calculo da soma utilizando o reduce
+    const soma = pNumeros.reduce((acumulador, numero) => acumulador + numero);
 
     return {soma};
 
@@ -28,7 +37,7 @@ app.post('/soma',async (req, res) => {
     try {
         //desestruturação
         const { numeros } = req.body;// no post a gente requere ele com body que é o corpo da rquisição
-        console.log(`Dados recebidos: Numeros=${numeros}`);
+        console.log(`Dados recebidos: Numeros = ${numeros}`);
 
         const { soma } = await validaNumeros(numeros);
         // coloco o status 201 pois quando faço um post eu 
