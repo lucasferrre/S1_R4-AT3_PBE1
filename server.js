@@ -10,25 +10,25 @@ async function validaNumeros(pNumeros) {
 
     // aqui eu valido se não é um array e se a estring está vazia
     if (!Array.isArray(pNumeros) || pNumeros.length === 0 ) {
-        throw new Error("O array de notas é inválido ou está vazio. Por favor, tente novamente");
+        throw new Error("O array de numeros é inválido ou está vazio. Por favor, tente novamente");
     }
 
-     // Aqui verifica se todos os itens são números válidos
-    /*  O some é uma função que testa se pelo menos um item do array atende a uma condição.
-        Se um ou mais elementos passarem no teste, ele retorna true.
-        Se nenhum passar, ele retorna false. */
-    const numInvalido = pNumeros.some(num => typeof num !== 'number' || isNaN(num));
+     // Aqui eu estou filtrando somente os números válidos
+    /*  O filter é um método de array que percorre todos os elementos
+        e cria um novo array apenas com os itens que passam em uma condição.
+        E ele não altera o array original. nesse caso eu to validando se os números 
+        são validos ent ele cria uma nova array só com os números válidos */
+    const numerosValidos = pNumeros.filter(num => typeof num === 'number' && !isNaN(num));
 
-    // Aqui ele entra no if se algum valor do array não for um número
-    if (numInvalido) {
-        throw new Error("O array contém valores inválidos (como strings ou NaN). Use apenas números.");
+    // Aqui ele entra no if se dentro do array não tiver nenhum número válido
+    if (numerosValidos.length === 0) {
+        throw new Error("Nenhum valor numérico válido foi encontrado no array.");
     }
     
-    // nesse caso se for false o retorno de num
-    // aqui eu faço o calculo da soma utilizando o reduce
-    const soma = pNumeros.reduce((acumulador, numero) => acumulador + numero);
+    // aqui eu faço o calculo da soma com base nos numeros validados e utilizando o reduce
+    const soma = numerosValidos.reduce((acumulador, numero) => acumulador + numero);
 
-    return {soma};
+    return {soma, numerosValidos};
 
 }
 
@@ -39,11 +39,11 @@ app.post('/soma',async (req, res) => {
         const { numeros } = req.body;// no post a gente requere ele com body que é o corpo da rquisição
         console.log(`Dados recebidos: Numeros = ${numeros}`);
 
-        const { soma } = await validaNumeros(numeros);
+        const { soma, numerosValidos } = await validaNumeros(numeros);
         // coloco o status 201 pois quando faço um post eu 
         // estou criando uma novo registro/requisição, sempre que usarmos post usamos o 201
         res.status(201).json (
-                {message:`Dados recebidos com sucesso no servidor.`, soma:`${soma}`
+                {message:`Dados recebidos com sucesso no servidor.`,numerosValidos:`${numerosValidos}`,soma:`${soma}`
              });
        
     } catch (error) {
