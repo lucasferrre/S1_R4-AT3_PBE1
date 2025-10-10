@@ -37,9 +37,9 @@ app.post('/soma',async (req, res) => {
     try {
         //desestruturação
         const { numeros } = req.body;// no post a gente requere ele com body que é o corpo da rquisição
-        console.log(`Dados recebidos: Numeros = ${numeros}`);
-
         const { soma } = await validaNumeros(numeros);
+        console.log(`Dados recebidos: Numeros = ${numeros}, soma = ${soma}`);
+
         // coloco o status 201 pois quando faço um post eu 
         // estou criando uma novo registro/requisição, sempre que usarmos post usamos o 201
         res.status(201).json (
