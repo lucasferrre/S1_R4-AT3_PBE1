@@ -14,7 +14,7 @@ async function validaNumeros(pNumeros) {
     }
 
      // Aqui verifica se todos os itens são números válidos
-    /*  O some é uma função que testa se pelo menos um item do array atende a uma condição.
+    /*  O some é um método de array que testa se pelo menos um item do array atende a uma condição.
         Se um ou mais elementos passarem no teste, ele retorna true.
         Se nenhum passar, ele retorna false. */
     const numInvalido = pNumeros.some(num => typeof num !== 'number' || isNaN(num));
