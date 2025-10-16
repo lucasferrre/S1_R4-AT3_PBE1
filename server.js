@@ -5,7 +5,7 @@ const PORT = 8081;
 // nesse caso eu quero que o express entenda json, ent eu coloco esse midleware para valer para todas as rotas
 app.use(express.json());
 
-// função para validar as informações de nome e notas no array
+// função para validar as informações de nome e  as notas do array
 async function validaDados(pNome, pNotas) {
     if (typeof pNome !== "string") {
         throw new Error("O nome é inválido ou está vazio.por favor tente novamente!");   
