@@ -5,7 +5,7 @@ const PORT = 8081;
 // nesse caso eu quero que o express entenda json, ent eu coloco esse midleware para valer para todas as rotas
 app.use(express.json());
 
-// função para validar as informações de nome e notas no array
+// função para validar as informações dos números
 async function validaNumeros(pNumeros) {
 
     // aqui eu valido se não é um array e se a estring está vazia
@@ -32,7 +32,7 @@ async function validaNumeros(pNumeros) {
 
 }
 
-// Crie uma projeto com que tenha uma rota POST /mensagem que atenda as seguintes necessidades:
+// rota POST /soma 
 app.post('/soma',async (req, res) => {
     try {
         //desestruturação
