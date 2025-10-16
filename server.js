@@ -32,7 +32,7 @@ async function validaNumeros(pNumeros) {
 
 }
 
-// Crie uma projeto com que tenha uma rota POST /mensagem que atenda as seguintes necessidades:
+// rota POST /soma 
 app.post('/soma',async (req, res) => {
     try {
         //desestruturação
